@@ -35,15 +35,33 @@ headers = {
 pixel_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}"
 
 today = datetime.now()
+formatted_date = today.strftime("%Y%m%d")
 # option 2
-today = datetime(year=2023, month=7, day=23)
+# today = datetime(year=2023, month=7, day=23)
 # ref: https://www.w3schools.com/python/python_datetime.asp
 # print(today.strftime("%Y%m%d"))
 
 pixel_config = {
-    "date": today.strftime("%Y%m%d"),
-    "quantity": "4.0"
+    "date": formatted_date,
+    "quantity": input("How many Km did you drive today? ")
 }
 
-# pixel_res = requests.post(pixel_endpoint, json=pixel_config, headers=headers)
-# print(pixel_res.text)
+pixel_res = requests.post(pixel_endpoint, json=pixel_config, headers=headers)
+print(pixel_res.text)
+
+
+# update endpoint
+update_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}/{formatted_date}"
+updated_pixel_data = {
+    "quantity": "10.4"
+}
+
+# res = requests.put(url=update_endpoint, json=updated_pixel_data, headers=headers)
+# print(res.text)
+
+
+# DELETE endpoint
+delete_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}/{formatted_date}"
+
+# res = requests.delete(url=delete_endpoint, headers=headers)
+# print(res.text)
