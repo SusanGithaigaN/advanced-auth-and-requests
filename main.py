@@ -1,16 +1,49 @@
-# This is a sample Python script.
+import requests
+from datetime import datetime
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+TOKEN = "jhbwuie7wjsdjsbhvd8ajw"
+USERNAME = "susan-n-githaiga"
+GRAPH_ID = "mygraph01"
 
+pixela_endpoint = "https://pixe.la/v1/users"
+# create pixela account & secret token
+user_params = {
+    "agreeTermsOfService": "yes",
+    "notMinor": "yes",
+}
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# create a graph
+graph_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs"
+# params
+graph_config = {
+    "id": GRAPH_ID,
+    "name": "Driving graph",
+    "unit": "Km",
+    "type": "float",
+    "color": "shibafu"
+}
 
+headers = {
+    "X-USER-TOKEN":  TOKEN
+}
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# # make POST Request
+# response = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
+# print(response.text)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# post a pixel
+pixel_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}"
+
+today = datetime.now()
+# option 2
+today = datetime(year=2023, month=7, day=23)
+# ref: https://www.w3schools.com/python/python_datetime.asp
+# print(today.strftime("%Y%m%d"))
+
+pixel_config = {
+    "date": today.strftime("%Y%m%d"),
+    "quantity": "4.0"
+}
+
+# pixel_res = requests.post(pixel_endpoint, json=pixel_config, headers=headers)
+# print(pixel_res.text)
